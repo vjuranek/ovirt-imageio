@@ -30,8 +30,8 @@ class Client:
 
     def __init__(self, cfg):
         self.con = http_client.HTTPSConnection(
-            cfg.images.host,
-            cfg.images.port,
+            cfg.remote.host,
+            cfg.remote.port,
             pki.key_file(cfg),
             pki.cert_file(cfg))
 
