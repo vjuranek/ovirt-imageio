@@ -90,17 +90,20 @@ class Server:
             self.local_service = services.LocalService(self.config, self.auth)
             self.local_service.start()
 
-        log.debug("Starting control service on socket %r",
-                  self.config.control.socket)
-        self.control_service = services.ControlService(self.config, self.auth)
-        self.control_service.start()
+        if config.control.enable:
+            log.debug("Starting control service on socket %r",
+                      self.config.control.socket)
+            self.control_service = services.ControlService(
+                self.config, self.auth)
+            self.control_service.start()
 
     def stop(self):
         log.debug("Stopping services")
         self.remote_service.stop()
         if config.local.enable:
             self.local_service.stop()
-        self.control_service.stop()
+        if config.control.enable:
+            self.control_service.stop()
         self.remote_service = None
         self.local_service = None
         self.control_service = None

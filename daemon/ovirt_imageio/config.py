@@ -64,6 +64,9 @@ class local:
 
 class control:
 
+    # Enable control service.
+    enable = True
+
     # Control service socket path. This socket is used to control the
     # daemon and must be accessible only to the program controlling the
     # daemon.
