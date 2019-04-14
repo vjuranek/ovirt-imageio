@@ -268,23 +268,30 @@ def test_open_unix(tmpdir, url, export):
             assert c.export_size == 1024**3
 
 
-@pytest.mark.parametrize("url_template,export", [
+@pytest.mark.parametrize("url_template,host,export", [
     # Note: We get Unicode URL when parsing ticket JSON.
-    ("nbd:localhost:{port}", ""),
-    ("nbd:localhost:{port}:exportname=", ""),
-    ("nbd:localhost:{port}:exportname=sda", "sda"),
-    ("nbd:localhost:{port}:exportname=/sda", "/sda"),
-    ("nbd://localhost:{port}", ""),
-    ("nbd://localhost:{port}/", ""),
-    ("nbd://localhost:{port}/sda", "sda"),
-    ("nbd://localhost:{port}//sda", "/sda"),
+    # DNS name
+    ("nbd:localhost:{port}", "localhost", ""),
+    ("nbd:localhost:{port}:exportname=", "localhost", ""),
+    ("nbd:localhost:{port}:exportname=sda", "localhost", "sda"),
+    ("nbd:localhost:{port}:exportname=/sda", "localhost", "/sda"),
+    ("nbd://localhost:{port}", "localhost", ""),
+    ("nbd://localhost:{port}/", "localhost", ""),
+    ("nbd://localhost:{port}/sda", "localhost", "sda"),
+    ("nbd://localhost:{port}//sda", "localhost", "/sda"),
+    # IPv4
+    ("nbd://127.0.0.1:{port}", "127.0.0.1", ""),
+    ("nbd:127.0.0.1:{port}", "127.0.0.1", ""),
+    # IPv6
+    ("nbd://[::1]:{port}", "[::1]", ""),
+    ("nbd:[::1]:{port}", "[::1]", ""),
 ])
-def test_open_tcp(tmpdir, url_template, export):
+def test_open_tcp(tmpdir, url_template, host, export):
     image = str(tmpdir.join("image"))
     with open(image, "wb") as f:
         f.truncate(1024**3)
 
-    sock = nbd.TCPAddress("localhost", testutil.random_tcp_port())
+    sock = nbd.TCPAddress(host, testutil.random_tcp_port())
     url = url_template.format(port=sock.port)
 
     log.debug("Trying url=%r export=%r", url, export)
