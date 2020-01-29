@@ -136,7 +136,9 @@ run manually.
 On Travis CI all tests run on:
 
 - CentOS 7, x86_64
-- Fedora 29, x86_64
+- CentOS 8, x86_64
+- Fedora 30, x86_64
+- Fedora 31, x86_64
 
 To test your changes on Travis:
 
