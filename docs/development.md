@@ -30,13 +30,17 @@ Make the commit-msg hook executable:
 
 Install the runtime requirements using automation packages files:
 
-For Fedora 29:
+For Fedora 30:
 
-    sudo yum install $(cat automation/check-patch.packages.fc29)
+    sudo yum install $(cat automation/check-patch.packages.fc30)
 
 For CentOS 7:
 
     sudo yum install $(cat automation/check-patch.packages.el7)
+
+For CentOS 8:
+
+    sudo yum install $(cat automation/check-patch.packages.el8)
 
 Install development tools:
 
