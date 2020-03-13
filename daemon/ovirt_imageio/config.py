@@ -48,14 +48,14 @@ class tickets:
     # tickets service socket path. This socket is used to control the
     # daemon and must be accessible only to the program controlling the
     # daemon.
-    socket = u"/run/ovirt-imageio/ovirt-imageio-daemon.sock"
+    socket = u"/run/ovirt-imageio/ovirt-imageio.sock"
 
 
 class profile:
 
     # Filename for storing profile data. Profiling requires the "yappi"
     # package. Version 0.93 is recommended for best performance.
-    filename = u"/tmp/ovirt-imageio-daemon.prof"
+    filename = u"/tmp/ovirt-imageio.prof"
 
 
 class Config:
