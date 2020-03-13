@@ -48,7 +48,7 @@ class tickets:
     # tickets service socket path. This socket is used to control the
     # daemon and must be accessible only to the program controlling the
     # daemon.
-    socket = u"/run/vdsm/ovirt-imageio-daemon.sock"
+    socket = u"/run/ovirt-imageio/ovirt-imageio-daemon.sock"
 
 
 class profile:
