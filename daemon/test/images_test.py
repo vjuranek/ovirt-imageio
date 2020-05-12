@@ -43,7 +43,7 @@ logging.basicConfig(
 
 @pytest.fixture(scope="module")
 def srv():
-    cfg = config.load(["test/conf/daemon.conf"])
+    cfg = config.load(["test/conf.d/daemon.conf"])
     s = server.Server(cfg)
     s.start()
     yield s

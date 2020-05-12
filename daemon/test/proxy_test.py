@@ -18,7 +18,7 @@ from . import testutil
 
 @pytest.fixture(scope="module")
 def daemon():
-    daemon = server.Server(config.load(["test/conf/daemon.conf"]))
+    daemon = server.Server(config.load(["test/conf.d/daemon.conf"]))
     daemon.start()
     yield daemon
     daemon.stop()
@@ -26,7 +26,7 @@ def daemon():
 
 @pytest.fixture(scope="module")
 def proxy():
-    proxy = server.Server(config.load(["test/conf/proxy.conf"]))
+    proxy = server.Server(config.load(["test/conf.d/proxy.conf"]))
     proxy.start()
     yield proxy
     proxy.stop()

@@ -16,7 +16,7 @@ from ovirt_imageio._internal import services
 @pytest.mark.parametrize("port", [-1, 65536])
 def test_invalid_remote_port(port):
     authorizer = auth.Authorizer()
-    cfg = config.load(["test/conf/daemon.conf"])
+    cfg = config.load(["test/conf.d/daemon.conf"])
     cfg.remote.port = port
     with pytest.raises(errors.InvalidConfig):
         services.RemoteService(cfg, authorizer)
@@ -25,7 +25,7 @@ def test_invalid_remote_port(port):
 @pytest.mark.parametrize("port", [-1, 65536])
 def test_invalid_control_port(port):
     authorizer = auth.Authorizer()
-    cfg = config.load(["test/conf/proxy.conf"])
+    cfg = config.load(["test/conf.d/proxy.conf"])
     cfg.control.port = port
     with pytest.raises(errors.InvalidConfig):
         services.ControlService(cfg, authorizer)

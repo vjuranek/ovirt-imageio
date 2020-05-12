@@ -41,7 +41,7 @@ logging.basicConfig(
     params=["daemon", "proxy"]
 )
 def srv(request):
-    path = "test/conf/{}.conf".format(request.param)
+    path = "test/conf.d/{}.conf".format(request.param)
     cfg = config.load(path)
     s = server.Server(cfg)
     s.start()

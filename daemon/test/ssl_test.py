@@ -26,7 +26,7 @@ def on_centos(version=""):
 
 @contextmanager
 def remote_service(config_file):
-    path = os.path.join("test/conf", config_file)
+    path = os.path.join("test/conf.d", config_file)
     cfg = config.load([path])
     authorizer = auth.Authorizer()
     s = services.RemoteService(cfg, authorizer)
