@@ -13,6 +13,8 @@ jobs:
     - env: DIST=fedora-32
 
 before_install:
+  - sudo echo '{"ipv6":true,"fixed-cidr-v6":"2001:db8:1::/64"}' > /etc/docker/daemon.json
+  - sudo service docker restart
   - docker pull quay.io/ovirt/imageio-test-$DIST
 
 script:
