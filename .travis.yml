@@ -14,7 +14,14 @@ jobs:
 
 before_install:
   - docker pull quay.io/ovirt/imageio-test-$DIST
-  - docker run -it --rm quay.io/ovirt/imageio-test-$DIST ip -6 addr
+  - |
+    docker run \
+    --privileged \
+    --rm \
+    -it \
+    --volume `pwd`:/src:Z \
+    quay.io/ovirt/imageio-test-$DIST \
+    bash -c "cd /daemon && python3 -c 'from test.testutil import ipv6_supported; ipv6_supported(use_stdout=True)'"
 
 script:
   - |

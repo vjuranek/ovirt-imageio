@@ -10,6 +10,7 @@ from __future__ import absolute_import
 
 import logging
 import socket
+import subprocess
 from uuid import uuid4
 
 from contextlib import closing
@@ -66,3 +67,23 @@ def create_tempfile(tmpdir, name, data=b'', size=None):
         if data:
             f.write(data)
     return file
+
+
+def ipv6_supported(use_stdout=False):
+
+    def log_result(msg, use_stdout=False):
+        if use_stdout:
+            print(msg)
+        else:
+            log.info(msg)
+
+    cmd = ["ip", "-6", "addr"]
+    p = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    out, _ = p.communicate()
+
+    if out is not None:
+        log_result("ipv6 is available", use_stdout)
+        return True
+
+    log_result("ipv6 is not available", use_stdout)
+    return False
