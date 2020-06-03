@@ -80,6 +80,20 @@ class Server(socketserver.ThreadingMixIn,
     # profiling.
     clock_class = stats.NullClock
 
+    address_family = socket.AF_INET6
+
+    def server_bind(self):
+        host, port = self.server_address[:2]
+
+        if self.allow_reuse_address:
+            self.socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+        self.socket.bind(("::", port))
+        self.server_address = self.socket.getsockname()
+
+        host, port = self.server_address[:2]
+        self.server_name = socket.getfqdn(host)
+        self.server_port = port
+
 
 class Connection(BaseHTTPServer.BaseHTTPRequestHandler):
     """
