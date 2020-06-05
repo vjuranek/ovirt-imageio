@@ -80,6 +80,18 @@ class Server(socketserver.ThreadingMixIn,
     # profiling.
     clock_class = stats.NullClock
 
+    def server_bind(self):
+        """Override server_bind to create socket with correct family."""
+        host, port = self.server_address[:2]
+        addrinfo = socket.getaddrinfo(
+            host, port, socket.AF_UNSPEC, self.socket_type)
+        family, _, _, _, _ = addrinfo[0]
+
+        self.address_family = family
+        self.socket = socket.socket(self.address_family, self.socket_type)
+
+        super().server_bind()
+
 
 class Connection(BaseHTTPServer.BaseHTTPRequestHandler):
     """

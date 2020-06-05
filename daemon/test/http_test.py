@@ -303,10 +303,12 @@ class PartialResponse(object):
         resp.write(b"Starting response...")
         raise http.Error(http.INTERNAL_SERVER_ERROR, "No more data for you!")
 
-
-@pytest.fixture(scope="module")
-def server():
-    server = http.Server(("127.0.0.1", 0), http.Connection)
+@pytest.fixture(params=[
+    pytest.param("127.0.0.1", id="IPv4"),
+    pytest.param("::1", id="IPv6"),
+], scope="module")
+def server(request):
+    server = http.Server((request.param, 0), http.Connection)
     log.info("Server listening on port %d", server.server_port)
 
     server.app = http.Router([
@@ -532,7 +534,7 @@ def test_request_info_get(server):
     assert info["content"] is None
     assert info["headers"]["host"] == "localhost:%d" % server.server_port
     assert info["headers"]["accept-encoding"] == "identity"
-    assert info["client_addr"] == "127.0.0.1"
+    assert info["client_addr"] == server.server_address[0]
     assert info["range"] is None
 
 
